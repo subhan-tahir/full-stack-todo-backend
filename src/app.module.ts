@@ -7,7 +7,7 @@ import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URL as string, {
       connectionFactory: (connection) => {
         connection.on('connected', () => {
