@@ -1,12 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodoController } from './todo/todo.controller';
-import { TodoService } from './todo/todo.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController, TodoController],
-  providers: [AppService, TodoService],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    MongooseModule.forRoot(process.env.MONGODB_URL as string, {
+      connectionFactory: (connection) => {
+        connection.on('connected', () => {
+          console.log('✅ MongoDB connected');
+        });
+        connection.on('error', (err) => {
+          console.error('❌ MongoDB error:', err);
+        });
+        return connection;
+      },
+    }),
+    TodoModule
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log('MongoDB_URL', process.env.MONGODB_URL);
+  }
+}
