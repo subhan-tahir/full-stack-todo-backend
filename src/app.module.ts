@@ -13,7 +13,7 @@ import { TodoModule } from './todo/todo.module';
         connection.on('connected', () => {
           console.log('✅ MongoDB connected');
         });
-        connection.on('error', (err) => {
+        connection.on('error', (err : any) => {
           console.error('❌ MongoDB error:', err);
         });
         return connection;
