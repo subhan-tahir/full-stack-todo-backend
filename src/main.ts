@@ -3,8 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  console.log('🚀 MONGODB_URL:', process.env.MONGODB_URL);
-console.log('PORT',process.env.PORT);
+  console.log('🚀 MONGODB_URL', process.env.MONGODB_URL);
+console.log('PORT...s',process.env.PORT);
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({ 
